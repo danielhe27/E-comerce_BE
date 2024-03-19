@@ -32,8 +32,15 @@ router.get('/:id', async (req, res) => {
 // Create a new product
 router.post('/', async (req, res) => {
   try {
-    const product = await Product.create(req.body);
 
+    const product = await Product.create({
+      product_name: req.body.product_name,
+      price: req.body.price,
+      stock: req.body.stock,
+      category_id: req.body.category_id,
+    });
+
+    // If there are tag IDs provided with the request, handle creating associations
     if (req.body.tagIds && req.body.tagIds.length) {
       const productTagIdArr = req.body.tagIds.map((tag_id) => {
         return {
@@ -41,13 +48,16 @@ router.post('/', async (req, res) => {
           tag_id,
         };
       });
+      
+      // Bulk create product-tag associations
       await ProductTag.bulkCreate(productTagIdArr);
     }
 
-    const result = await Product.findByPk(product.id, {
-      include: [{ model: Category }, { model: Tag, through: ProductTag, as: 'tags' }],
+    const createdProduct = await Product.findByPk(product.id, {
+      include: [{ model: ProductTag, as: 'tags' }], 
     });
-    res.status(200).json(result);
+    
+    res.status(200).json(createdProduct);
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
