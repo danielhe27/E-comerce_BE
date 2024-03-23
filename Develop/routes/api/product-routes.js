@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
     res.status(201).json(product);
   } catch (err) {
     console.error(err);
-    res.status(400).json({ error: 'Bad request' });
+    res.status(400).json({ error: 'please include product name, category, price and stock' });
   }
 });
 
