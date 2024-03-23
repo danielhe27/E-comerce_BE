@@ -5,7 +5,7 @@ const { Tag, Product, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const tagData = await Tag.findAll({
-      include: [{ model: Product, through: ProductTag, as: 'productTags' }], // Ensure this matches your association alias
+      include: [{ model: Product}, {model: ProductTag, attributes: ['product_id'], through: ProductTag, as: 'productTags'}]
     });
     res.status(200).json(tagData);
   } catch (err) {
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const tagData = await Tag.findByPk(req.params.id, {
-      include: [{ model: Product, through: ProductTag, as: 'productTags' }], // Corrected alias
+      include: [{ model: Product, through: ProductTag, as: 'productTags' }], 
     });
     if (!tagData) {
       res.status(404).json({ message: 'No tag found with this id' });
@@ -45,13 +45,12 @@ router.post('/', async (req, res) => {
     res.status(200).json(newTag);
   } catch (err) {
     console.error(err);
-    res.status(500).json(err); // Changed to 500 since it's a server error if it occurs after validation
+    res.status(500).json(err); 
   }
 });
 
 
 router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
   Tag.update(req.body, {
     where: {
       id: req.params.id,
