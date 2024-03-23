@@ -34,7 +34,7 @@
   ## Tests
   Npm start
 
-  -[video]([https://www.loom.com/share/d555ed09ef624fed8bc56b1427fb7557?sid=ad79afb3-2499-444b-9bf7-404e4e4e233f](https://drive.google.com/file/d/1V7i69aXiIF4bzi5HU4HxHg5czYoYM8ur/view?usp=sharing))
+  -[video](https://drive.google.com/file/d/1V7i69aXiIF4bzi5HU4HxHg5czYoYM8ur/view?usp=sharing)
   
   ## Questions
   If you have any questions, please contact me:
