@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 
-// Find a single tag by its `id`, including its associated Product data
+// Find a single tag by its `id`
 router.get('/:id', async (req, res) => {
   try {
     const tagData = await Tag.findByPk(req.params.id, {
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
   if (!req.body.tag_name) {
     return res.status(400).json({ message: 'Tag name is required' });
   }
-
+// this is to create new tag
   try {
     const newTag = await Tag.create({
       tag_name: req.body.tag_name,
@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-
+// router for update tag by id
 router.put('/:id', (req, res) => {
   Tag.update(req.body, {
     where: {
